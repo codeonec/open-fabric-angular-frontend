@@ -1,5 +1,5 @@
 [data-bs-theme="dark"] {
-  --bs-body-bg: #111827;
+  --bs-body-bg: #0f1623;
   --bs-body-color: #ffffff;
   --bs-border-color: rgba(255, 255, 255, 0.05);
 }
@@ -11,5 +11,25 @@ body {
 }
 
 .navbar {
-  background: #0f1623;
+  background: #111827;
+}
+.text-secondary {
+  color: #9ca3af !important;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
+}
+
+.product-card {
+  background: #111827;
+
+  img {
+    max-height: 150px;
+    object-fit: cover;
+    object-position: center;
+  }
 }
