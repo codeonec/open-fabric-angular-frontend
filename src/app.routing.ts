@@ -5,5 +5,10 @@ const routes: Route[] = [
     loadComponent: () =>
       import("./home.component").then((c) => c.HomeComponent),
   },
+  {
+    path: "auth",
+    loadComponent: () =>
+      import("./login.component").then((c) => c.LoginComponent),
+  },
 ];
 export const appRouting = [provideRouter(routes)];
