@@ -32,28 +32,36 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.products = [
       {
+        id: "1",
         name: "The One",
         description:
           "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores, sint exercitationem. ",
         img: "https://images.unsplash.com/photo-1646736722277-8e035a16e056?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=450&q=80",
+        dateCreated: "2023-05-27",
       },
       {
+        id: "2",
         name: "The One",
         description:
           "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores, sint exercitationem. ",
         img: "https://images.unsplash.com/photo-1635009981431-6134280a4639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=450&q=80",
+        dateCreated: "2023-05-27",
       },
       {
+        id: "3",
         name: "The One",
         description:
           "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores, sint exercitationem. ",
         img: "https://images.unsplash.com/photo-1643304187561-022272be30ca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=450&q=80",
+        dateCreated: "2023-05-27",
       },
       {
+        id: "4",
         name: "The One",
         description:
           "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores, sint exercitationem. ",
         img: "https://images.unsplash.com/photo-1643304187561-022272be30ca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=450&q=80",
+        dateCreated: "2023-05-27",
       },
     ];
   }

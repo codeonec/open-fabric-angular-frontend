@@ -1,4 +1,8 @@
-import { Route, provideRouter } from "@angular/router";
+import {
+  Route,
+  provideRouter,
+  withComponentInputBinding,
+} from "@angular/router";
 const routes: Route[] = [
   {
     path: "",
@@ -10,5 +14,10 @@ const routes: Route[] = [
     loadComponent: () =>
       import("./login.component").then((c) => c.LoginComponent),
   },
+  {
+    path: "product/:id",
+    loadComponent: () =>
+      import("./productDetail.component").then((c) => c.ProductDetailComponent),
+  },
 ];
-export const appRouting = [provideRouter(routes)];
+export const appRouting = [provideRouter(routes, withComponentInputBinding())];
