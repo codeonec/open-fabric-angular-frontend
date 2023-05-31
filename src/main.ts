@@ -5,4 +5,7 @@ import { AppComponent } from "./app.component";
 import { appRouting } from "./app.routing";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.scss";
-bootstrapApplication(AppComponent, { providers: [...appRouting] });
+import { provideHttpClient } from "@angular/common/http";
+bootstrapApplication(AppComponent, {
+  providers: [...appRouting, provideHttpClient()],
+});

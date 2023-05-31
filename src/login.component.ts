@@ -1,39 +1,53 @@
-import { Component } from "@angular/core";
+import { Component, OnInit, Injectable, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from "@angular/forms";
+import { APIServices } from "./api.service";
+import { HttpClientModule } from "@angular/common/http";
 @Component({
   selector: "app-login",
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
   template: `
     <div class="container pt-5">
       <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-lg-6 col-md-8">
           <div class="card">
             <div class="card-header text-center">
               <h3>Login</h3>
             </div>
             <div class="card-body">
-              <form>
+              <form [formGroup]="authForm" (ngSubmit)="auth()">
                 <div class="form-group mb-3">
-                  <label for="email">Email address</label>
+                  <label for="username">Username</label>
                   <input
-                    type="email"
+                    type="username"
+                    formControlName="username"
                     class="form-control"
-                    id="email"
-                    placeholder="Enter email"
+                    id="username"
+                    placeholder="Enter username"
                   />
                 </div>
                 <div class="form-group mb-3">
                   <label for="password">Password</label>
                   <input
                     type="password"
+                    formControlName="password"
                     class="form-control"
                     id="password"
                     placeholder="Password"
                   />
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-block"
+                  [disabled]="!authForm.valid"
+                >
                   Login
                 </button>
               </form>
@@ -44,6 +58,18 @@ import { CommonModule } from "@angular/common";
     </div>
   `,
 })
-export class LoginComponent {
-  constructor() {}
+@Injectable()
+export class LoginComponent implements OnInit {
+  authForm: any;
+  apiService = inject(APIServices);
+  ngOnInit(): void {
+    this.authForm = new FormGroup({
+      username: new FormControl("", Validators.required),
+      password: new FormControl("", Validators.required),
+    });
+  }
+  auth() {
+    console.log(this.authForm.value);
+    this.apiService.getProducts();
+  }
 }
