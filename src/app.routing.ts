@@ -11,9 +11,14 @@ const routes: Route[] = [
       import("./home.component").then((c) => c.HomeComponent),
   },
   {
-    path: "auth",
+    path: "auth/login",
     loadComponent: () =>
       import("./login.component").then((c) => c.LoginComponent),
+  },
+  {
+    path: "auth/register",
+    loadComponent: () =>
+      import("./register.component").then((c) => c.RegisterComponent),
   },
   {
     path: "product/:id",

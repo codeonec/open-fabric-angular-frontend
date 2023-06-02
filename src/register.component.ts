@@ -11,7 +11,7 @@ import { APIServices } from "./api.service";
 import { HttpClientModule } from "@angular/common/http";
 import { Router } from "@angular/router";
 @Component({
-  selector: "app-login",
+  selector: "app-register",
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
   template: `
@@ -20,7 +20,7 @@ import { Router } from "@angular/router";
         <div class="col-lg-6 col-md-8">
           <div class="card">
             <div class="card-header text-center">
-              <h3>Login</h3>
+              <h3>Sign up</h3>
             </div>
             <div class="card-body">
               <form [formGroup]="authForm" (ngSubmit)="auth()">
@@ -35,6 +35,16 @@ import { Router } from "@angular/router";
                   />
                 </div>
                 <div class="form-group mb-3">
+                  <label for="email">Email</label>
+                  <input
+                    type="email"
+                    formControlName="email"
+                    class="form-control"
+                    id="email"
+                    placeholder="Enter email"
+                  />
+                </div>
+                <div class="form-group mb-3">
                   <label for="password">Password</label>
                   <input
                     type="password"
@@ -44,12 +54,15 @@ import { Router } from "@angular/router";
                     placeholder="Password"
                   />
                 </div>
+                <div class="form-group mb-3">
+                  <label for="password">Already have and account? Log In</label>
+                </div>
                 <button
                   type="submit"
                   class="btn btn-primary btn-block"
                   [disabled]="!authForm.valid"
                 >
-                  Login
+                  Signup
                 </button>
               </form>
             </div>
@@ -60,24 +73,27 @@ import { Router } from "@angular/router";
   `,
 })
 @Injectable()
-export class LoginComponent implements OnInit {
+export class RegisterComponent implements OnInit {
   authForm: any;
   apiService = inject(APIServices);
   router = inject(Router);
+
   ngOnInit(): void {
-    const authToken = localStorage.getItem('auth-token');
-    if(authToken){
-      this.router.navigate(['/']);
+    const authToken = localStorage.getItem("auth-token");
+    if (authToken) {
+      this.router.navigate(["/"]);
     }
     this.authForm = new FormGroup({
       username: new FormControl("", Validators.required),
       password: new FormControl("", Validators.required),
+      email: new FormControl("", [Validators.required, Validators.email]),
     });
   }
   auth() {
     console.log(this.authForm.value);
-    this.apiService.authLogin(
+    this.apiService.authRegister(
       this.authForm.value.username,
+      this.authForm.value.email,
       this.authForm.value.password
     );
   }

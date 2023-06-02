@@ -5,3 +5,6 @@ export interface Product {
   img: string;
   dateCreated: string;
 }
+export interface AuthRes {
+  token: string;
+}
