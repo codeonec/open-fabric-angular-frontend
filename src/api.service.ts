@@ -71,9 +71,15 @@ export class APIServices {
       )
       .subscribe(
         (resp: any) => {
-          console.log(resp.status, resp);
+          this.router.navigate([`/product/${resp._id}`]);
         },
         (err) => console.error(err)
       );
+  }
+  apiGetAllProducts() {
+    return this.http.get(`${environment.apiUrl}/products/`);
+  }
+  apiGetProduct(id: String) {
+    return this.http.get(`${environment.apiUrl}/products/${id}`);
   }
 }

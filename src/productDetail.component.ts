@@ -1,29 +1,32 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { APIServices } from "./api.service";
+import { Observable } from "rxjs";
 @Component({
   selector: "product-detail",
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="container py-5">
+    <div *ngIf="product$ | async as product" class="container py-5">
       <div class="card mb-3 border-0">
         <div class="row g-0">
           <div class="col-md-4">
             <img
-              [src]="product.image"
+              [src]="product.imgUrl"
               class="card-img-top"
-              alt="{{ product.name }}"
+              [alt]="product.name"
             />
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <h5 class="card-title">{{ product.name }}</h5>
-              <p class="card-text">
+              <h5 class="card-title fw-bold">{{ product.name }}</h5>
+              <p class="card-text mb-3">
                 {{ product.description }}
               </p>
+              <p class="fs-6 fw-bold mb-0">{{ product.price | currency : "USD" }}</p>
               <p class="card-text">
-                <small class="text-body-secondary"
-                  >Date Created: {{ product.dateCreated }}</small
+                <small class="text-body-secondary">
+                  {{ product.createdAt | date : "MMM dd, yyyy" }}</small
                 >
               </p>
             </div>
@@ -34,26 +37,17 @@ import { CommonModule } from "@angular/common";
   `,
 })
 export class ProductDetailComponent implements OnInit {
-  product: any;
+  product$!: Observable<any>;
   productId: any;
   constructor() {}
+
+  apiService = inject(APIServices);
+
   @Input()
   set id(productId: string) {
     this.productId = productId;
-    console.log(this.productId);
-    this.getProductDetails(this.productId);
   }
-  ngOnInit(): void {}
-  getProductDetails(id: number) {
-    // Fetch product data using the provided ID
-    // Replace this with your actual API call or data fetching method
-    this.product = {
-      id: id,
-      name: "Sample Product",
-      description: "This is a sample product description.",
-      image:
-        "https://images.unsplash.com/photo-1646736722277-8e035a16e056?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=450&q=80",
-      dateCreated: "2023-05-27",
-    };
+  ngOnInit(): void {
+    this.product$ = this.apiService.apiGetProduct(this.productId);
   }
 }

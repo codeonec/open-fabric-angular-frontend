@@ -91,7 +91,8 @@ export class ProductFormComponent implements OnInit {
 
   productForm!: FormGroup;
   apiService = inject(APIServices);
-
+  urlRegX =
+    /(https?:\/\/)[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
   constructor() {}
 
   ngOnInit(): void {
@@ -110,16 +111,13 @@ export class ProductFormComponent implements OnInit {
       ),
       imgUrl: new FormControl(
         this.product ? this.product.imgUrl : "",
-        Validators.pattern(
-          "(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?"
-        )
+        Validators.pattern(this.urlRegX)
       ),
     });
   }
 
   onSubmit() {
     if (this.productForm.valid) {
-      console.log(this.productForm.value);
       this.apiService.apiPost({
         name: this.productForm.value.name as String,
         description: this.productForm.value.description as String,

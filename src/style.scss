@@ -32,4 +32,16 @@ h4 {
     object-fit: cover;
     object-position: center;
   }
+  .description-text {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* number of lines to show */
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    font-size: 15px;
+  }
+}
+
+.signInBtn {
+  cursor: pointer;
 }

@@ -1,68 +1,45 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { Product } from "./models";
+// import { Product } from "./models";
 import { ProductComponent } from "./product.component";
+import { APIServices } from "./api.service";
+import { Observable, map } from "rxjs";
+import { RouterLink } from "@angular/router";
 @Component({
   selector: "app-home",
   standalone: true,
-  imports: [CommonModule, ProductComponent],
+  imports: [CommonModule, ProductComponent, RouterLink],
   template: `
-    <div class="container pt-5">
+    <div class="container py-5">
       <div class="row gy-4">
         <div class="col-12 pb-4">
           <div class="d-flex justify-content-between">
             <h2>All Products</h2>
-            <button type="button" class="btn btn-primary btn-sm">
-              Primary
-            </button>
+            <a
+              routerLink="/create"
+              class="btn btn-primary btn-sm align-self-center fw-medium"
+            >
+              Add product
+            </a>
           </div>
         </div>
         <product
-          *ngFor="let product of products"
+          *ngFor="let product of products$ | async"
           [product]="product"
-          class="col-lg-3 col-md-4 col-sm-6 col-12"
+          class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12"
         ></product>
       </div>
     </div>
   `,
 })
 export class HomeComponent implements OnInit {
-  products: Product[] = [];
+  products$!: Observable<any>;
+  // products: Product[] = [];
 
+  apiService = inject(APIServices);
   ngOnInit(): void {
-    this.products = [
-      {
-        id: "1",
-        name: "The One",
-        description:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores, sint exercitationem. ",
-        img: "https://images.unsplash.com/photo-1646736722277-8e035a16e056?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=450&q=80",
-        dateCreated: "2023-05-27",
-      },
-      {
-        id: "2",
-        name: "The One",
-        description:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores, sint exercitationem. ",
-        img: "https://images.unsplash.com/photo-1635009981431-6134280a4639?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=450&q=80",
-        dateCreated: "2023-05-27",
-      },
-      {
-        id: "3",
-        name: "The One",
-        description:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores, sint exercitationem. ",
-        img: "https://images.unsplash.com/photo-1643304187561-022272be30ca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=450&q=80",
-        dateCreated: "2023-05-27",
-      },
-      {
-        id: "4",
-        name: "The One",
-        description:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores, sint exercitationem. ",
-        img: "https://images.unsplash.com/photo-1643304187561-022272be30ca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=450&q=80",
-        dateCreated: "2023-05-27",
-      },
-    ];
+    this.products$ = this.apiService
+      .apiGetAllProducts()
+      .pipe(map((response) => response));
   }
 }

@@ -9,11 +9,11 @@ import {
 } from "@angular/forms";
 import { APIServices } from "./api.service";
 import { HttpClientModule } from "@angular/common/http";
-import { Router } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 @Component({
   selector: "app-login",
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, RouterLink],
   template: `
     <div class="container pt-5">
       <div class="row justify-content-center">
@@ -31,6 +31,7 @@ import { Router } from "@angular/router";
                     formControlName="username"
                     class="form-control"
                     id="username"
+                    value="test2"
                     placeholder="Enter username"
                   />
                 </div>
@@ -43,6 +44,12 @@ import { Router } from "@angular/router";
                     id="password"
                     placeholder="Password"
                   />
+                </div>
+                <div class="form-group mb-3">
+                  <label for="password"
+                    >Don't have an account?
+                    <a routerLink="/auth/register">Sign up</a></label
+                  >
                 </div>
                 <button
                   type="submit"
@@ -65,9 +72,9 @@ export class LoginComponent implements OnInit {
   apiService = inject(APIServices);
   router = inject(Router);
   ngOnInit(): void {
-    const authToken = localStorage.getItem('auth-token');
-    if(authToken){
-      this.router.navigate(['/']);
+    const authToken = localStorage.getItem("auth-token");
+    if (authToken) {
+      this.router.navigate(["/"]);
     }
     this.authForm = new FormGroup({
       username: new FormControl("", Validators.required),
@@ -75,7 +82,6 @@ export class LoginComponent implements OnInit {
     });
   }
   auth() {
-    console.log(this.authForm.value);
     this.apiService.authLogin(
       this.authForm.value.username,
       this.authForm.value.password

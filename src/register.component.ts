@@ -9,11 +9,11 @@ import {
 } from "@angular/forms";
 import { APIServices } from "./api.service";
 import { HttpClientModule } from "@angular/common/http";
-import { Router } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 @Component({
   selector: "app-register",
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, RouterLink],
   template: `
     <div class="container pt-5">
       <div class="row justify-content-center">
@@ -55,7 +55,10 @@ import { Router } from "@angular/router";
                   />
                 </div>
                 <div class="form-group mb-3">
-                  <label for="password">Already have and account? Log In</label>
+                  <label for="password"
+                    >Already have an account?
+                    <a routerLink="/auth/login">Log In</a></label
+                  >
                 </div>
                 <button
                   type="submit"
@@ -90,7 +93,6 @@ export class RegisterComponent implements OnInit {
     });
   }
   auth() {
-    console.log(this.authForm.value);
     this.apiService.authRegister(
       this.authForm.value.username,
       this.authForm.value.email,
