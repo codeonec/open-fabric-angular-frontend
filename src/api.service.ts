@@ -1,5 +1,5 @@
 import { Injectable, inject } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "../environment.local";
 import { Router } from "@angular/router";
 
@@ -11,7 +11,7 @@ export class APIServices {
   http = inject(HttpClient);
   router = inject(Router);
 
-  authToken: String | null = localStorage.getItem("auth-token");
+  authToken: String = localStorage.getItem("auth-token") as String;
 
   authLogin(username: String, password: String) {
     this.http
@@ -46,5 +46,34 @@ export class APIServices {
         (err) => console.error(err)
       );
     return true;
+  }
+  apiPost(product: {
+    name: String;
+    description: String;
+    price: Number;
+    imgUrl: String;
+  }) {
+    const { name, description, price, imgUrl } = product;
+    this.http
+      .post(
+        `${environment.apiUrl}/products/`,
+        {
+          name,
+          description,
+          price,
+          ...(imgUrl && { imgUrl }),
+        },
+        {
+          headers: new HttpHeaders({
+            "x-auth-token": `${this.authToken}`,
+          }),
+        }
+      )
+      .subscribe(
+        (resp: any) => {
+          console.log(resp.status, resp);
+        },
+        (err) => console.error(err)
+      );
   }
 }
