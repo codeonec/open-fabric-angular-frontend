@@ -25,7 +25,7 @@ import { Router, RouterLink } from "@angular/router";
             <div class="card-body">
               <form [formGroup]="authForm" (ngSubmit)="auth()">
                 <div class="form-group mb-3">
-                  <label for="username">Username</label>
+                  <label for="username" class="required">Username</label>
                   <input
                     type="username"
                     formControlName="username"
@@ -35,17 +35,23 @@ import { Router, RouterLink } from "@angular/router";
                   />
                 </div>
                 <div class="form-group mb-3">
-                  <label for="email">Email</label>
+                  <label for="email" class="required">Email</label>
                   <input
                     type="email"
                     formControlName="email"
                     class="form-control"
                     id="email"
+                    [ngClass]="{
+                      'is-invalid': authForm.controls.email.errors?.email
+                    }"
                     placeholder="Enter email"
                   />
+                  <div class="invalid-feedback">
+                    Email must be a valid email.
+                  </div>
                 </div>
                 <div class="form-group mb-3">
-                  <label for="password">Password</label>
+                  <label for="password" class="required">Password</label>
                   <input
                     type="password"
                     formControlName="password"
@@ -91,6 +97,7 @@ export class RegisterComponent implements OnInit {
       password: new FormControl("", Validators.required),
       email: new FormControl("", [Validators.required, Validators.email]),
     });
+    console.log(this.authForm);
   }
   auth() {
     this.apiService.authRegister(

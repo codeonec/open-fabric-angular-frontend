@@ -13,7 +13,7 @@ import { RouterLink } from "@angular/router";
         class="card product-card border bg-ter h-100 w-100 rounded-3"
         style="width: 18rem;"
       >
-        <img src="{{ product.imgUrl }}" class="card-img-top" alt="..." />
+        <img *ngIf="product.imgUrl" src="{{ product.imgUrl }}" class="card-img-top" alt="..." />
         <div class="card-body">
           <h5 class="card-title">{{ product.name }}</h5>
           <p class="card-text text-secondary description-text">

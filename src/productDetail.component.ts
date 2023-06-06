@@ -10,7 +10,7 @@ import { Observable } from "rxjs";
     <div *ngIf="product$ | async as product" class="container py-5">
       <div class="card mb-3 border-0">
         <div class="row g-0">
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="product.imgUrl">
             <img
               [src]="product.imgUrl"
               class="card-img-top"
@@ -23,7 +23,9 @@ import { Observable } from "rxjs";
               <p class="card-text mb-3">
                 {{ product.description }}
               </p>
-              <p class="fs-6 fw-bold mb-0">{{ product.price | currency : "USD" }}</p>
+              <p class="fs-6 fw-bold mb-0">
+                {{ product.price | currency : "USD" }}
+              </p>
               <p class="card-text">
                 <small class="text-body-secondary">
                   {{ product.createdAt | date : "MMM dd, yyyy" }}</small

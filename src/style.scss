@@ -45,3 +45,7 @@ h4 {
 .signInBtn {
   cursor: pointer;
 }
+.form-group label.required:after {
+  content: " *";
+  color: red;
+}

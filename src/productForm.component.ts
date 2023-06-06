@@ -30,7 +30,7 @@ import { APIServices } from "./api.service";
             <div class="card-body">
               <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
                 <div class="form-group mb-3">
-                  <label for="name">Product Name</label>
+                  <label for="name" class="required">Product Name</label>
                   <input
                     type="text"
                     class="form-control"
@@ -40,7 +40,9 @@ import { APIServices } from "./api.service";
                   />
                 </div>
                 <div class="form-group mb-3">
-                  <label for="description">Product Description</label>
+                  <label for="description" class="required"
+                    >Product Description</label
+                  >
                   <textarea
                     class="form-control"
                     id="description"
@@ -55,12 +57,16 @@ import { APIServices } from "./api.service";
                     type="text"
                     class="form-control"
                     id="image"
+                    [ngClass]="{
+                      'is-invalid': !productForm.controls.imgUrl.valid
+                    }"
                     formControlName="imgUrl"
                     placeholder="Enter product image URL"
                   />
+                  <div class="invalid-feedback">Provided url is invalid.</div>
                 </div>
                 <div class="form-group mb-3">
-                  <label for="price">Price</label>
+                  <label for="price" class="required">Price</label>
                   <input
                     type="number"
                     class="form-control"
